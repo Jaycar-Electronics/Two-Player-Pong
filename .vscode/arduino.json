@@ -1,0 +1,5 @@
+{
+    "port": "COM41",
+    "board": "arduino:avr:uno",
+    "sketch": "pong\\pong.ino"
+}
