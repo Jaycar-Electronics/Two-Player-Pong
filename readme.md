@@ -70,6 +70,7 @@ Power can be supplied through the USB port- even though it is recommended to run
 
 ## Programming source code
 
+
 The sketch for this project relies on a library called DMD to drive the panel, which in turn requires another library called TimerOne to automate the scanning of the display. These can be downloaded from [https://github.com/freetronics/DMD/archive/master.zip](https://github.com/freetronics/DMD/archive/master.zip) and [https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/arduino-timerone/TimerOne-r11.zip](https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/arduino-timerone/TimerOne-r11.zip) respectively. Make sure the libraries are installed, and then compile the code, making sure the Nano board is selected. If Pong does not come to life, there is probably a wiring error with the display. Try pressing down the joysticks- you should get sounds from the buzzer as the ball moves around.
 
 ## Gameplay
@@ -84,6 +85,6 @@ To tweak the skill levels, the delay between screen updates (currently 30ms) can
 
 The DMD library can support multiple panels, so there’s no reason that you can’t make a bigger display- you might just need to change the sketch to suit.
 
-## 3D Printable Bracket:
+## 3D Printable Bracket
 
-We've included a 3D printable bracket in this repo!
+We've included a 3D printable bracket in this repo! Check the `panel-bracket.stl` file in this project and have a go of printing it on one of our [XC4210](https://jaycar.com.au/p/XC4210) printers!
