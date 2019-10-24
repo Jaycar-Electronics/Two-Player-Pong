@@ -70,21 +70,46 @@ Power can be supplied through the USB port- even though it is recommended to run
 
 ## Programming source code
 
+The sketch for this project relies on a library called DMD to drive the panel, which has been included in the main sketch folder.
 
-The sketch for this project relies on a library called DMD to drive the panel, which in turn requires another library called TimerOne to automate the scanning of the display. These can be downloaded from [https://github.com/freetronics/DMD/archive/master.zip](https://github.com/freetronics/DMD/archive/master.zip) and [https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/arduino-timerone/TimerOne-r11.zip](https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/arduino-timerone/TimerOne-r11.zip) respectively. Make sure the libraries are installed, and then compile the code, making sure the Nano board is selected. If Pong does not come to life, there is probably a wiring error with the display. Try pressing down the joysticks- you should get sounds from the buzzer as the ball moves around.
+You will also need to make sure that the `TimerOne` library is installed, through the Arduino Library manager.
+
+Select the NANO in the `Tools > Boards` menu and upload. If you find that it is not working, change `Tools > Processor` to `ATmega328P (Old Bootloader)`
+
+If Pong does not come to life, there is probably a wiring error with the display. Try pressing down the joysticks- you should get sounds from the buzzer as the ball moves around.
 
 ## Gameplay
 
 The ball starts with Player 1 on the left, and is served by clicking down on the joystick. The bats can be moved up and down with the joysticks, and when a player misses, the other player scores a point and gets to serve. After one player gets to seven points, the game ends and a short tune plays, after which, the game returns to its starting state. The angle that the ball bounces off the bats depends on where it hits the bats, and also a little bit of randomness, just to stop the game from getting predictable.
 
-## Improvements
+## Future Improvements
 
-You’ll probably find it gets a bit awkward trying to play with the display panel floating around and the joysticks having such short leads, so the first step would be to mount the panel and install longer leads for the joysticks- you could even design a little 3d-printed box for the joysticks to make them easier to hold. If you don’t like the joysticks, an old-school paddle controller could be made from a small enclosure, a potentiometer and a pushbutton. Or make things really tricky and use an analog distance sensor like XC4585.
+If you don’t like the joysticks, an old-school paddle controller could be made from a small enclosure, a potentiometer and a pushbutton. Or make things really tricky and use a distance sensor like [XC4442](https://jaycar.com.au/p/XC4442).
+
+The code also needs a bit of work to make it tidier and more readable, so feel free to fix up the code in a way that makes sense to you and help us out!
 
 To tweak the skill levels, the delay between screen updates (currently 30ms) can be increased to make the ball move slower or decreased to make it faster. The bat size is also a variable that can be changed.
 
+```cpp
+
+// gameplay definitions
+const int batsize = 4;
+const long update_rate = 30;
+
+//tones and sounds while playing
+const int ball_paddle_tone = 512;
+const int ball_wall_tone = 128;
+const int serve_tone = 256;
+
+```
+
 The DMD library can support multiple panels, so there’s no reason that you can’t make a bigger display- you might just need to change the sketch to suit.
 
-## 3D Printable Bracket
+## 3D Printable Files
 
-We've included a 3D printable bracket in this repo! Check the `panel-bracket.stl` file in this project and have a go of printing it on one of our [XC4210](https://jaycar.com.au/p/XC4210) printers!
+We have included two STL files in this project for you to add to your project.
+
+- `joystick-case.stl` to enclose the joystick into an easy to hold case.
+- `panel-bracket.stl` to hold up the [XC4622](https://jaycar.com.au/p/XC4622) panel.
+
+Have a go of printing these on our [TL4210](https://jaycar.com.au/p/TL4210) printers.
