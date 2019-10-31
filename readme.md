@@ -25,42 +25,48 @@ You will also need the DMD library which has been included in this project.
 
 ## System Connections
 
-| Nano | DMD      | Buzzer | Joystick 1 | Joystick 2 | Function          |
-| ---- | -------- | ------ | ---------- | ---------- | ----------------- |
-| 5V   | 5V       |        | +5V        | +5V        | Power             |
-| GND  | GND (x2) |        | GND        | GND        | Ground            |
-| 2    |          | -      |            |            | Ground for Buzzer |
-| 4    |          | S      |            |            | Output for buzzer |
-| 6    | 2        |        |            |            | Row selector A    |
-| 7    | 4        |        |            |            | Row selector B    |
-| 8    | 10       |        |            |            | Latch             |
-| 9    | 1        |        |            |            | Output Enable     |
-| 11   | 12       |        |            |            | Serial Data       |
-| 13   | 8        |        |            |            | Serial Clock      |
-| A0   |          |        | VRx        |            | Player 1 position |
-| A1   |          |        | SW         |            | Player 1 button   |
-| A2   |          |        |            | VRx        | Player 2 position |
-| A3   |          |        |            | SW         | Player 2 button   |
+| Nano | DMD      | Joysticks | Description       |
+| ---- | -------- | --------- | ----------------- |
+| 5V   | 5V       | +5V (x2)  | Power             |
+| GND  | GND (x2) | GND (x2)  | Ground            |
+| 6    | 2 (A)    |           | Row selector A    |
+| 7    | 4 (B)    |           | Row selector B    |
+| 8    | 10 (L)   |           | Latch             |
+| 9    | 1 (OE)   |           | Output Enable     |
+| 11   | 12 (R)   |           | Serial Data       |
+| 13   | 8 (S)    |           | Serial Clock      |
+| A0   |          | VRx (1)   | Player 1 position |
+| A1   |          | SW (1)    | Player 1 button   |
+| A2   |          | VRx (2)   | Player 2 position |
+| A3   |          | SW (2)    | Player 2 button   |
 
-The 5V connection to the DMD panel can go the pin 2 of the ICSP header, which will let you use plug-socket jumpers for all the connectors.
+- Note that both of the joysticks are connect to 5V and GND, Then each of the `VRx` and `SW` pins from each controller is connected to `A0` to `A3`
+- The DMD power NEEDS 5V power connected to the screw terminals, on both the `5V` and the `GND` pins, you can use either the `ISCP` pins for the nano, or you could use the nano's `VIN` pin to provide power, as long as you are running the nano off USB.
+
+| Nano | Buzzer | Description        |
+| ---- | ------ | ------------------ |
+| 2    | -      | Buzzer ground      |
+| 4    | S      | Buzzer tone signal |
 
 ![pinout](images/pinout.jpg)
 
 This is the pinout of the connector on the panel – the panel should be facing up (the arrows on the back of the panel will face up and right), and the connections are made to the left hand connector.
 
+You should find it is labelled `HUB12-IN`
+
 ## Assembly
 
 The first step will be to plug the Nano into the breadboard - note the picture below where the Nano is offset to allow extra connections on one side.
+
+![board](images/board.jpg)
 
 ![main](images/mainboard.jpg)
 
 The most difficult part of the assembly is the connections between the breadboard and the dot matrix panel. Ensure that you connect to the left hand connector (closest to VCC) looking at the back of the display.
 
-![connections](images/connections.jpg)
+![connections](images/connections2.jpg)
 
 Double check the connections, and make sure that no wires are in the wrong place. Note also the two wires running to the power screw terminals towards the middle of the display panel.
-
-![system](images/system.jpg)
 
 The buzzer module is straightforward- it just connects to pins 2, 3 and 4. The joystick modules each have four wires, below is an image with the handle removed.
 
@@ -76,15 +82,21 @@ You will also need to make sure that the `TimerOne` library is installed, throug
 
 Select the NANO in the `Tools > Boards` menu and upload. If you find that it is not working, change `Tools > Processor` to `ATmega328P (Old Bootloader)`
 
+If you find that there is no port on the arduino IDE, so you can not change what `PORT` the arduino is programming, make sure you have the `FTDI` drivers installed; you can do this by going to your device manager and making sure that you can see a `COM##` number there under "Ports" (where `##` could be any number other than `3` which is the windows default port).
+
+If you cannot find a port; you can download drivers from here: <https://www.ftdichip.com/Drivers/VCP.htm> - try to get an earlier version of the drivers to avoid any issues, as FTDI have been in the news about not working with chips that they determine to be non-genuine. Below is a screenshot of our drivers.
+
+![ftdi drivers](images/driver.png)
+
 If Pong does not come to life, there is probably a wiring error with the display. Try pressing down the joysticks- you should get sounds from the buzzer as the ball moves around.
 
-## Gameplay
+## Game play
 
 The ball starts with Player 1 on the left, and is served by clicking down on the joystick. The bats can be moved up and down with the joysticks, and when a player misses, the other player scores a point and gets to serve. After one player gets to seven points, the game ends and a short tune plays, after which, the game returns to its starting state. The angle that the ball bounces off the bats depends on where it hits the bats, and also a little bit of randomness, just to stop the game from getting predictable.
 
 ## Future Improvements
 
-If you don’t like the joysticks, an old-school paddle controller could be made from a small enclosure, a potentiometer and a pushbutton. Or make things really tricky and use a distance sensor like [XC4442](https://jaycar.com.au/p/XC4442).
+If you don't like the joysticks, an old-school paddle controller could be made from a small enclosure, a potentiometer and a push button. Or make things really tricky and use a distance sensor like [XC4442](https://jaycar.com.au/p/XC4442).
 
 The code also needs a bit of work to make it tidier and more readable, so feel free to fix up the code in a way that makes sense to you and help us out!
 
@@ -103,7 +115,7 @@ const int serve_tone = 256;
 
 ```
 
-The DMD library can support multiple panels, so there’s no reason that you can’t make a bigger display- you might just need to change the sketch to suit.
+The DMD library can support multiple panels, so there's no reason that you can't make a bigger display- you might just need to change the sketch to suit.
 
 ## 3D Printable Files
 

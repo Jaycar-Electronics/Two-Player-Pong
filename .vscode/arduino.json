@@ -1,5 +1,6 @@
 {
     "port": "COM41",
-    "board": "arduino:avr:uno",
-    "sketch": "pong\\pong.ino"
+    "board": "arduino:avr:nano",
+    "sketch": "pong\\pong.ino",
+    "configuration": "cpu=atmega328old"
 }
